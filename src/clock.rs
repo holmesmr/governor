@@ -80,6 +80,18 @@ pub trait Clock: Clone {
 
     /// Returns a measurement of the clock.
     fn now(&self) -> Self::Instant;
+
+    /// Returns a suitable base time for use by rate limiters.
+    ///
+    /// Unless overridden by a trait implementation, this will
+    /// be the same as [`now`](Self::now).
+    ///
+    /// It is necessary to provide an alternate implementation if used with a
+    /// [`StateStore`](crate::state::StateStore) that can persist storage
+    /// across multiple processes, as a common base time is required.
+    fn start(&self) -> Self::Instant {
+        self.now()
+    }
 }
 
 impl Reference for Duration {

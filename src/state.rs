@@ -79,7 +79,7 @@ where
     /// [`direct`] or other methods instead.
     pub fn new(quota: Quota, state: S, clock: &C) -> Self {
         let gcra = Gcra::new(quota);
-        let start = clock.now();
+        let start = clock.start();
         let clock = clock.clone();
         RateLimiter {
             state,
